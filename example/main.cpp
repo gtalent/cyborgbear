@@ -16,14 +16,13 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
-#ifdef CYBORGBEAR_BOOST_ENABLED
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
-#endif
 #include "Model.hpp"
+#include "Models2.hpp"
 
 using namespace std;
-using namespace models;
+using namespace models2;
 
 void testJson(Model1 &orig) {
 	Model1 copy;
@@ -34,6 +33,29 @@ void testJson(Model1 &orig) {
 }
 
 void testBoost(Model1 &orig) {
+	std::ofstream ofs("filename");
+
+   // create class instance
+   const Model1 g;
+
+   // save data to archive
+   {
+		boost::archive::text_oarchive oa(ofs);
+		// write class instance to archive
+		oa << g;
+		// archive and stream closed when destructors are called
+   }
+
+   // ... some time later restore the class instance to its orginal state
+   Model1 newg;
+   {
+       // create and open an archive for input
+       std::ifstream ifs("filename");
+       boost::archive::text_iarchive ia(ifs);
+       // read class state from archive
+       ia >> newg;
+       // archive and stream closed when destructors are called
+   }
 #ifdef CYBORGBEAR_BOOST_ENABLED
 	Model1 copy;
 

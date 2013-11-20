@@ -27,8 +27,8 @@ func main() {
 	out := flag.String("o", "stdout", "File or file set(languages with header files) to write the output to")
 	in := flag.String("i", "", "The model file to generate JSON serialization code for")
 	namespace := flag.String("n", "models", "Namespace for the models")
-	outputType := flag.String("t", "cpp-jansson", "Output type(cpp-jansson, cpp-qt, go)")
-	boost := flag.Bool("cpp-boost", false, "Boost serialization enabled")
+	baseNs := flag.String("bn", "models", "Namespace for the base models")
+	baseInclude := flag.String("bi", "models", "Include file for the base models")
 	lowerCase := flag.Bool("lc", false, "Make variable names lowercase in output models")
 	version := flag.Bool("v", false, "version")
 	flag.Parse()
@@ -37,10 +37,10 @@ func main() {
 		fmt.Println("cyborgbear version " + cyborgbear_version)
 		return
 	}
-	parseFile(*in, *out, *namespace, *outputType, *boost, *lowerCase)
+	parseFile(*in, *baseInclude, *out, *baseNs, *namespace, *lowerCase)
 }
 
-func parseFile(path, outFile, namespace, outputType string, boost, lowerCase bool) {
+func parseFile(path, baseInclude, outFile, baseNs, namespace string, lowerCase bool) {
 	ss, err := ioutil.ReadFile(path)
 	if err != nil {
 		fmt.Println("Could not find or open specified model file")
@@ -48,23 +48,8 @@ func parseFile(path, outFile, namespace, outputType string, boost, lowerCase boo
 	}
 	input := string(ss)
 
-	ioutputType := USING_JANSSON
-	switch outputType {
-	case "cpp-jansson":
-		ioutputType = USING_JANSSON
-	case "cpp-qt":
-		ioutputType = USING_QT
-	case "go", "Go":
-		ioutputType = USING_GO
-	}
-
 	var out Out
-	switch ioutputType {
-	case USING_JANSSON, USING_QT:
-		out = NewCOut(namespace, ioutputType, boost, lowerCase)
-	case USING_GO:
-		out = NewGo(namespace)
-	}
+	out = NewCOut(baseInclude, baseNs, namespace, lowerCase)
 
 	models, err := parser.Parse(input)
 	if err != nil {
