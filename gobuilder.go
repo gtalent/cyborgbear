@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 gtalent2@gmail.com
+   Copyright 2013-2014 gtalent2@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -31,12 +31,12 @@ func NewGo(pkg string) *Go {
 	return out
 }
 
-func (me *Go) addClass(name string) {
+func (me *Go) AddClass(name string) {
 	me.text += `
 type ` + name + ` struct {`
 }
 
-func (me *Go) addVar(name string, t []parser.VarType) {
+func (me *Go) AddVar(name string, t []parser.VarType) {
 	vtype := ""
 	for _, v := range t {
 		switch v.Type {
@@ -55,7 +55,7 @@ func (me *Go) addVar(name string, t []parser.VarType) {
 	me.text += "\n\t" + name + " " + vtype
 }
 
-func (me *Go) closeClass(name string) {
+func (me *Go) CloseClass(name string) {
 	me.text += `
 }
 
@@ -137,11 +137,11 @@ func (me *` + name + `) ReadObjFile(path string) error {
 `
 }
 
-func (me *Go) writeFile(s string) error {
-	return ioutil.WriteFile(s, []byte(me.write("")), 0644)
+func (me *Go) WriteFile(s string) error {
+	return ioutil.WriteFile(s, []byte(me.Write("")), 0644)
 }
 
-func (me *Go) write(s string) string {
+func (me *Go) Write(s string) string {
 	out := `package ` + me.pkg + `
 
 import (

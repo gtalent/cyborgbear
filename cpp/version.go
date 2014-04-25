@@ -13,9 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package main
+package cpp
 
-func main() {
-	var m Model1
-	println(string(m.ToJSON()))
-}
+const cyborgbear_version = "1.0.0-cleanup"

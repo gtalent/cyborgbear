@@ -13,9 +13,19 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package main
+package cpp
 
-func main() {
-	var m Model1
-	println(string(m.ToJSON()))
+import (
+	"os"
+	"github.com/GeertJohan/go.rice"
+)
+
+var box *rice.Box
+
+func init() {
+	var err error
+	box, err = rice.FindBox("ricebox")
+	if err != nil {
+		os.Exit(1)
+	}
 }

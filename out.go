@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 gtalent2@gmail.com
+   Copyright 2013-2014 gtalent2@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,9 +26,9 @@ const (
 )
 
 type Out interface {
-	write(string) string
-	writeFile(string) error
-	addClass(string)
-	addVar(string, []parser.VarType)
-	closeClass(string)
+	Write(string) string
+	WriteFile(string) error
+	AddClass(string)
+	AddVar(string, []parser.VarType)
+	CloseClass(string)
 }

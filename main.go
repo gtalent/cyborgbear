@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 gtalent2@gmail.com
+   Copyright 2013-2014 gtalent2@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 package main
 
 import (
-	"github.com/gtalent/cyborgbear/parser"
 	"flag"
 	"fmt"
+	"github.com/gtalent/cyborgbear/cpp"
+	"github.com/gtalent/cyborgbear/parser"
 	"io/ioutil"
 	"os"
 )
@@ -60,8 +61,10 @@ func parseFile(path, outFile, namespace, outputType string, boost, lowerCase boo
 
 	var out Out
 	switch ioutputType {
-	case USING_JANSSON, USING_QT:
-		out = NewCOut(namespace, ioutputType, boost, lowerCase)
+	case USING_JANSSON:
+		out = cpp.NewCOut(namespace, cpp.USING_JANSSON, boost, lowerCase)
+	case USING_QT:
+		out = cpp.NewCOut(namespace, cpp.USING_QT, boost, lowerCase)
 	case USING_GO:
 		out = NewGo(namespace)
 	}
@@ -73,17 +76,17 @@ func parseFile(path, outFile, namespace, outputType string, boost, lowerCase boo
 		return
 	} else {
 		for _, v := range models {
-			out.addClass(v.Name)
+			out.AddClass(v.Name)
 			for _, vv := range v.Vars {
-				out.addVar(vv.Name, vv.Type)
+				out.AddVar(vv.Name, vv.Type)
 			}
-			out.closeClass(v.Name)
+			out.CloseClass(v.Name)
 		}
 
 		if outFile == "stdout" {
-			fmt.Print(out.write(""))
+			fmt.Print(out.Write(""))
 		} else {
-			out.writeFile(outFile)
+			out.WriteFile(outFile)
 		}
 	}
 }

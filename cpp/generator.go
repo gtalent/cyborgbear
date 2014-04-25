@@ -1,5 +1,5 @@
 /*
-   Copyright 2013 gtalent2@gmail.com
+   Copyright 2013-2014 gtalent2@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package main
+package cpp
 
 import (
 	"github.com/gtalent/cyborgbear/parser"
@@ -52,11 +52,11 @@ func NewCOut(namespace string, lib int, boost, lowerCase bool) *Cpp {
 	return out
 }
 
-func (me *Cpp) write(outFile string) string {
+func (me *Cpp) Write(outFile string) string {
 	return me.header("") + "\n" + me.body("")
 }
 
-func (me *Cpp) writeFile(outFile string) error {
+func (me *Cpp) WriteFile(outFile string) error {
 	var err error
 	err = ioutil.WriteFile(outFile+".hpp", []byte(me.header(outFile+".hpp")), 0644)
 	if err != nil {
@@ -122,7 +122,7 @@ func (me *Cpp) buildVar(v, t string, index []parser.VarType) string {
 	return me.buildTypeDec(t, index) + " " + v + array + ";"
 }
 
-func (me *Cpp) addVar(v string, index []parser.VarType) {
+func (me *Cpp) AddVar(v string, index []parser.VarType) {
 	jsonV := v
 	if me.lowerCase && len(v) > 0 && v[0] < 91 {
 		v = string(v[0]+32) + v[1:]
@@ -138,7 +138,7 @@ func (me *Cpp) addVar(v string, index []parser.VarType) {
 	me.boostFuncs += me.buildBoostSerialize(v)
 }
 
-func (me *Cpp) addClass(v string) {
+func (me *Cpp) AddClass(v string) {
 	me.hpp += "\nnamespace " + me.namespace + " {\n"
 	me.hpp += "\nusing cyborgbear::string;\n"
 	me.hpp += "\nclass " + v + ": public cyborgbear::Model {\n"
@@ -189,7 +189,7 @@ string ` + v + `::toBoostBinary() {
 `
 }
 
-func (me *Cpp) closeClass(v string) {
+func (me *Cpp) CloseClass(v string) {
 	me.hpp += "};\n\n"
 	me.hpp += "}\n\n"
 	me.constructor += "}\n\n"
@@ -227,7 +227,7 @@ func (me *Cpp) body(headername string) string {
 	include := ""
 	if headername != "" {
 		include += `//Generated Code
-` + me.buildModelmakerDefsBody(headername) + `
+` + me.cyborgbearDefsBody(headername) + `
 
 #include "string.h"
 #include "` + headername + `"
@@ -1174,7 +1174,7 @@ class unknown: public Model {
 	return out
 }
 
-func (me *Cpp) buildModelmakerDefsBody(headername string) string {
+func (me *Cpp) cyborgbearDefsBody(headername string) string {
 	out := `
 #include <fstream>
 #include "` + headername + `"
