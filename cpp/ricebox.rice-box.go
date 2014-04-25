@@ -30,7 +30,7 @@ func init() {
 	// register embeddedBox
 	embedded.RegisterEmbeddedBox(`ricebox`, &embedded.EmbeddedBox{
 		Name: `ricebox`,
-		Time: time.Unix(1398450552, 0),
+		Time: time.Unix(1398450923, 0),
 		Dirs: map[string]*embedded.EmbeddedDir{
 			"": dir_1,
 		},

@@ -16,6 +16,7 @@
 package cpp
 
 import (
+	"github.com/gtalent/cyborgbear/common"
 	"github.com/gtalent/cyborgbear/parser"
 	"io/ioutil"
 	"strconv"
@@ -1182,7 +1183,7 @@ func (me *Cpp) cyborgbearDefsBody(headername string) string {
 using namespace ` + me.namespace + `;
 using namespace ` + me.namespace + `::cyborgbear;
 
-string ` + me.namespace + `::cyborgbear::version = "` + cyborgbear_version + `";
+string ` + me.namespace + `::cyborgbear::version = "` + common.CyborgbearVersion + `";
 
 int Model::readJsonFile(string path) {
 	std::ifstream in;

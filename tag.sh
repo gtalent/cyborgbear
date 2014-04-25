@@ -1,4 +1,4 @@
-echo "package main; const cyborgbear_version = \"$2\";" | tee cpp/version.go > version.go
+echo "package common; const cyborgbear_version = \"$2\";" > common/version.go
 go fmt
 
 liccor

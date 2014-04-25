@@ -18,6 +18,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/gtalent/cyborgbear/common"
 	"github.com/gtalent/cyborgbear/cpp"
 	"github.com/gtalent/cyborgbear/parser"
 	"io/ioutil"
@@ -35,7 +36,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Println("cyborgbear version " + cyborgbear_version)
+		fmt.Println("cyborgbear version " + common.CyborgbearVersion)
 		return
 	}
 	parseFile(*in, *out, *namespace, *outputType, *boost, *lowerCase)
