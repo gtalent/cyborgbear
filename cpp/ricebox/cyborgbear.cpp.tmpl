@@ -1,10 +1,10 @@
 #include <fstream>
-#include "{{.header}}"
+#include "{{.Header}}"
 
-using namespace {{.namespace}};
-using namespace {{.namespace}}::cyborgbear;
+using namespace {{.Namespace}};
+using namespace {{.Namespace}}::cyborgbear;
 
-string {{.namespace}}::cyborgbear::version = "{{.cyborgbear_version}}";
+string {{.Namespace}}::cyborgbear::version = "{{.Version}}";
 
 int Model::readJsonFile(string path) {
 	std::ifstream in;
@@ -15,7 +15,7 @@ int Model::readJsonFile(string path) {
 		return fromJson(cyborgbear::toString(json));
 	}
 	return cyborgbear::Error_CouldNotAccessFile;
-main}
+}
 
 void Model::writeJsonFile(string path, cyborgbear::JsonSerializationSettings sttngs) {
 	std::ofstream out;
