@@ -191,6 +191,14 @@ void unknown::set(string v) {
 	cyborgbear::decref(obj);
 }
 
+bool unknown::operator==(const unknown &o) const {
+	return m_type == o.m_type && m_data == o.m_data;
+}
+
+bool unknown::operator!=(const unknown &o) const {
+	return m_type != o.m_type || m_data != o.m_data;
+}
+
 #ifdef CYBORGBEAR_BOOST_ENABLED
 
 void unknown::fromBoostBinary(string dat) {

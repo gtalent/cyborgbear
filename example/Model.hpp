@@ -678,6 +678,9 @@ class unknown: public Model {
 		void set(double v);
 		void set(string v);
 
+		bool operator==(const unknown&) const;
+		bool operator!=(const unknown&) const;
+
 #ifdef CYBORGBEAR_BOOST_ENABLED
 		/**
 		 * Returns Boost serialization version of this object.
@@ -711,6 +714,10 @@ class Model1: public cyborgbear::Model {
 		cyborgbear::Error loadJsonObj(cyborgbear::JsonVal obj);
 
 		cyborgbear::JsonValOut buildJsonObj();
+
+		bool operator==(const Model1&) const;
+
+		bool operator!=(const Model1&) const;
 #ifdef CYBORGBEAR_BOOST_ENABLED
 
 		virtual string toBoostBinary();
