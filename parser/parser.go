@@ -185,7 +185,7 @@ func Parse(input string) ([]*Model, error) {
 
 func isScalar(v string) bool {
 	switch v {
-	case "bool", "int", "double", "float32", "float64", "string", "unknown":
+	case "bool", "int", "double", "float32", "float64", "string", "ptr", "unknown":
 		return true
 	}
 	return false
