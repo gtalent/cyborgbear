@@ -15,4 +15,4 @@
 */
 package main
 
-const cyborgbear_version = "2.0.0-beta1"
+const cyborgjson_version = "2.0.0-beta1"

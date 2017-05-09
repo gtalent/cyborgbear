@@ -30,12 +30,12 @@ void testJson(Model1 &orig) {
 }
 
 int main() {
-	cout << "Using cyborgbear version: " << models::cyborgbear::version << endl;
+	cout << "Using cyborgjson version: " << models::cyborgjson::version << endl;
 	Model1 mod;
 	mod.fromJson("{\"Field1\": \"Ni!\", \"Field2\": \"asdf\", \"Field3\": [4, 2], \"Field4\": [[\"Narf!\", \"Narf!\"], [\"Narf!\", \"Narf!\"]], \"Field5\": {\"Narf\": \"Ni\"}}");
 	mod.Field1 = "Narf!";
 
-	cout << mod.toJson(cyborgbear::Readable) << endl;
+	cout << mod.toJson(cyborgjson::Readable) << endl;
 
 	testJson(mod);
 	return 0;

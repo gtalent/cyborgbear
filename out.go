@@ -16,7 +16,7 @@
 package main
 
 import (
-	"github.com/gtalent/cyborgbear/parser"
+	"github.com/gtalent/cyborgjson/parser"
 )
 
 const (

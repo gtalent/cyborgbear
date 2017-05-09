@@ -1,3 +1,3 @@
-# cyborgbear
-## Getting cyborgbear
-			go get github.com/gtalent/cyborgbear
+# cyborgjson
+## Getting cyborgjson
+			go get github.com/gtalent/cyborgjson

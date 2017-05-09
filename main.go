@@ -18,7 +18,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/gtalent/cyborgbear/parser"
+	"github.com/gtalent/cyborgjson/parser"
 	"io/ioutil"
 	"os"
 )
@@ -45,7 +45,7 @@ func main() {
 	flag.Parse()
 
 	if args.version {
-		fmt.Println("cyborgbear version " + cyborgbear_version)
+		fmt.Println("cyborgjson version " + cyborgjson_version)
 		return
 	}
 	parseFile(args)

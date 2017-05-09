@@ -1,61 +1,46 @@
-/*
- * Copyright 2013 - 2015 gtalent2@gmail.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 //Generated Code
 
 #include <fstream>
 #include "Model.hpp"
 
 using namespace models;
-using namespace models::cyborgbear;
+using namespace models::cyborgjson;
 
-string models::cyborgbear::version = "2.0.0-beta1";
+string models::cyborgjson::version = "2.0.0-beta1";
 
 int Model::readJsonFile(string path) {
 	try {
 		std::ifstream in;
-		in.open(cyborgbear::toStdString(path).c_str());
+		in.open(cyborgjson::toStdString(path).c_str());
 		if (in.is_open()) {
 			std::string json((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
 			in.close();
-			return fromJson(cyborgbear::toString(json));
+			return fromJson(cyborgjson::toString(json));
 		}
 	} catch (...) {
 	}
-	return cyborgbear::Error_CouldNotAccessFile;
+	return cyborgjson::Error_CouldNotAccessFile;
 }
 
-void Model::writeJsonFile(string path, cyborgbear::JsonSerializationSettings sttngs) {
+void Model::writeJsonFile(string path, cyborgjson::JsonSerializationSettings sttngs) {
 	std::ofstream out;
-	out.open(cyborgbear::toStdString(path).c_str());
-	std::string json = cyborgbear::toStdString(toJson(sttngs));
+	out.open(cyborgjson::toStdString(path).c_str());
+	std::string json = cyborgjson::toStdString(toJson(sttngs));
 	out << json << "\0";
 	out.close();
 }
 
 int Model::fromJson(string json) {
-	cyborgbear::JsonValOut obj = cyborgbear::read(json);
-	cyborgbear::Error retval = loadJsonObj(obj);
-	cyborgbear::decref(obj);
+	cyborgjson::JsonValOut obj = cyborgjson::read(json);
+	cyborgjson::Error retval = loadJsonObj(obj);
+	cyborgjson::decref(obj);
 	return retval;
 }
 
-string Model::toJson(cyborgbear::JsonSerializationSettings sttngs) {
-	cyborgbear::JsonValOut val = buildJsonObj();
-	cyborgbear::JsonObjOut obj = cyborgbear::toObj(val);
-	return cyborgbear::write(obj, sttngs);
+string Model::toJson(cyborgjson::JsonSerializationSettings sttngs) {
+	cyborgjson::JsonValOut val = buildJsonObj();
+	cyborgjson::JsonObjOut obj = cyborgjson::toObj(val);
+	return cyborgjson::write(obj, sttngs);
 }
 
 unknown::unknown() {
@@ -84,37 +69,37 @@ unknown::unknown(string v) {
 unknown::~unknown() {
 }
 
-cyborgbear::Error unknown::loadJsonObj(cyborgbear::JsonVal obj) {
-	cyborgbear::JsonObjOut wrapper = cyborgbear::newJsonObj();
-	cyborgbear::objSet(wrapper, "Value", obj);
-	m_data = cyborgbear::write(wrapper, cyborgbear::Compact);
-	if (cyborgbear::isBool(obj)) {
-		m_type = cyborgbear::Bool;
-	} else if (cyborgbear::isInt(obj)) {
-		m_type = cyborgbear::Integer;
-	} else if (cyborgbear::isDouble(obj)) {
-		m_type = cyborgbear::Double;
-	} else if (cyborgbear::isString(obj)) {
-		m_type = cyborgbear::String;
-	} else if (cyborgbear::isObj(obj)) {
-		m_type = cyborgbear::Object;
+cyborgjson::Error unknown::loadJsonObj(cyborgjson::JsonVal obj) {
+	cyborgjson::JsonObjOut wrapper = cyborgjson::newJsonObj();
+	cyborgjson::objSet(wrapper, "Value", obj);
+	m_data = cyborgjson::write(wrapper, cyborgjson::Compact);
+	if (cyborgjson::isBool(obj)) {
+		m_type = cyborgjson::Bool;
+	} else if (cyborgjson::isInt(obj)) {
+		m_type = cyborgjson::Integer;
+	} else if (cyborgjson::isDouble(obj)) {
+		m_type = cyborgjson::Double;
+	} else if (cyborgjson::isString(obj)) {
+		m_type = cyborgjson::String;
+	} else if (cyborgjson::isObj(obj)) {
+		m_type = cyborgjson::Object;
 	}
 
-	if (cyborgbear::isNull(obj)) {
-		return cyborgbear::Error_GenericParsingError;
+	if (cyborgjson::isNull(obj)) {
+		return cyborgjson::Error_GenericParsingError;
 	} else {
-		return cyborgbear::Error_Ok;
+		return cyborgjson::Error_Ok;
 	}
 }
 
-cyborgbear::JsonValOut unknown::buildJsonObj() {
-	cyborgbear::JsonObjOut obj = cyborgbear::read(m_data);
+cyborgjson::JsonValOut unknown::buildJsonObj() {
+	cyborgjson::JsonObjOut obj = cyborgjson::read(m_data);
 #ifdef CYBORGBEAR_USING_QT
-	cyborgbear::JsonValOut val = cyborgbear::objRead(obj, "Value");
+	cyborgjson::JsonValOut val = cyborgjson::objRead(obj, "Value");
 #else
-	cyborgbear::JsonValOut val = cyborgbear::incref(cyborgbear::objRead(obj, "Value"));
+	cyborgjson::JsonValOut val = cyborgjson::incref(cyborgjson::objRead(obj, "Value"));
 #endif
-	cyborgbear::decref(obj);
+	cyborgjson::decref(obj);
 	return val;
 }
 
@@ -123,60 +108,60 @@ bool unknown::loaded() {
 }
 
 bool unknown::isBool() {
-	return m_type == cyborgbear::Bool;
+	return m_type == cyborgjson::Bool;
 }
 
 bool unknown::isInt() {
-	return m_type == cyborgbear::Integer;
+	return m_type == cyborgjson::Integer;
 }
 
 bool unknown::isDouble() {
-	return m_type == cyborgbear::Double;
+	return m_type == cyborgjson::Double;
 }
 
 bool unknown::isString() {
-	return m_type == cyborgbear::String;
+	return m_type == cyborgjson::String;
 }
 
 bool unknown::isObject() {
-	return m_type == cyborgbear::Object;
+	return m_type == cyborgjson::Object;
 }
 
 bool unknown::toBool() {
-	cyborgbear::JsonValOut obj = buildJsonObj();
+	cyborgjson::JsonValOut obj = buildJsonObj();
 	bool out;
-	cyborgbear::readVal(obj, out);
+	cyborgjson::readVal(obj, out);
 	return out;
 }
 
 int unknown::toInt() {
-	cyborgbear::JsonValOut obj = buildJsonObj();
+	cyborgjson::JsonValOut obj = buildJsonObj();
 	int out;
-	cyborgbear::readVal(obj, out);
+	cyborgjson::readVal(obj, out);
 	return out;
 }
 
 double unknown::toDouble() {
-	cyborgbear::JsonValOut obj = buildJsonObj();
+	cyborgjson::JsonValOut obj = buildJsonObj();
 	double out;
-	cyborgbear::readVal(obj, out);
+	cyborgjson::readVal(obj, out);
 	return out;
 }
 
 string unknown::toString() {
-	cyborgbear::JsonValOut obj = buildJsonObj();
+	cyborgjson::JsonValOut obj = buildJsonObj();
 	string out;
-	cyborgbear::readVal(obj, out);
+	cyborgjson::readVal(obj, out);
 	return out;
 }
 
 void unknown::set(Model *v) {
-	cyborgbear::JsonObjOut obj = cyborgbear::newJsonObj();
-	cyborgbear::JsonValOut val = v->buildJsonObj();
-	cyborgbear::objSet(obj, "Value", val);
-	m_type = cyborgbear::Object;
-	m_data = cyborgbear::write(obj, cyborgbear::Compact);
-	cyborgbear::decref(obj);
+	cyborgjson::JsonObjOut obj = cyborgjson::newJsonObj();
+	cyborgjson::JsonValOut val = v->buildJsonObj();
+	cyborgjson::objSet(obj, "Value", val);
+	m_type = cyborgjson::Object;
+	m_data = cyborgjson::write(obj, cyborgjson::Compact);
+	cyborgjson::decref(obj);
 
 	unknown *unk = dynamic_cast<unknown*>(v);
 	if (unk)
@@ -184,39 +169,39 @@ void unknown::set(Model *v) {
 }
 
 void unknown::set(bool v) {
-	cyborgbear::JsonObjOut obj = cyborgbear::newJsonObj();
-	cyborgbear::JsonValOut val = cyborgbear::toJsonVal(v);
-	cyborgbear::objSet(obj, "Value", val);
-	m_type = cyborgbear::Bool;
-	m_data = cyborgbear::write(obj, cyborgbear::Compact);
-	cyborgbear::decref(obj);
+	cyborgjson::JsonObjOut obj = cyborgjson::newJsonObj();
+	cyborgjson::JsonValOut val = cyborgjson::toJsonVal(v);
+	cyborgjson::objSet(obj, "Value", val);
+	m_type = cyborgjson::Bool;
+	m_data = cyborgjson::write(obj, cyborgjson::Compact);
+	cyborgjson::decref(obj);
 }
 
 void unknown::set(int v) {
-	cyborgbear::JsonObjOut obj = cyborgbear::newJsonObj();
-	cyborgbear::JsonValOut val = cyborgbear::toJsonVal(v);
-	cyborgbear::objSet(obj, "Value", val);
-	m_type = cyborgbear::Integer;
-	m_data = cyborgbear::write(obj, cyborgbear::Compact);
-	cyborgbear::decref(obj);
+	cyborgjson::JsonObjOut obj = cyborgjson::newJsonObj();
+	cyborgjson::JsonValOut val = cyborgjson::toJsonVal(v);
+	cyborgjson::objSet(obj, "Value", val);
+	m_type = cyborgjson::Integer;
+	m_data = cyborgjson::write(obj, cyborgjson::Compact);
+	cyborgjson::decref(obj);
 }
 
 void unknown::set(double v) {
-	cyborgbear::JsonObjOut obj = cyborgbear::newJsonObj();
-	cyborgbear::JsonValOut val = cyborgbear::toJsonVal(v);
-	cyborgbear::objSet(obj, "Value", val);
-	m_type = cyborgbear::Double;
-	m_data = cyborgbear::write(obj, cyborgbear::Compact);
-	cyborgbear::decref(obj);
+	cyborgjson::JsonObjOut obj = cyborgjson::newJsonObj();
+	cyborgjson::JsonValOut val = cyborgjson::toJsonVal(v);
+	cyborgjson::objSet(obj, "Value", val);
+	m_type = cyborgjson::Double;
+	m_data = cyborgjson::write(obj, cyborgjson::Compact);
+	cyborgjson::decref(obj);
 }
 
 void unknown::set(string v) {
-	cyborgbear::JsonObjOut obj = cyborgbear::newJsonObj();
-	cyborgbear::JsonValOut val = cyborgbear::toJsonVal(v);
-	cyborgbear::objSet(obj, "Value", val);
-	m_type = cyborgbear::String;
-	m_data = cyborgbear::write(obj, cyborgbear::Compact);
-	cyborgbear::decref(obj);
+	cyborgjson::JsonObjOut obj = cyborgjson::newJsonObj();
+	cyborgjson::JsonValOut val = cyborgjson::toJsonVal(v);
+	cyborgjson::objSet(obj, "Value", val);
+	m_type = cyborgjson::String;
+	m_data = cyborgjson::write(obj, cyborgjson::Compact);
+	cyborgjson::decref(obj);
 }
 
 bool unknown::operator==(const unknown &o) const {
@@ -239,43 +224,43 @@ Model1::Model1() {
 	for (int i = 0; i < 4; this->Field3[i++] = 0);
 }
 
-cyborgbear::Error Model1::loadJsonObj(cyborgbear::JsonVal in) {
-	cyborgbear::Error retval = cyborgbear::Error_Ok;
-	cyborgbear::JsonObjOut inObj = cyborgbear::toObj(in);
+cyborgjson::Error Model1::loadJsonObj(cyborgjson::JsonVal in) {
+	cyborgjson::Error retval = cyborgjson::Error_Ok;
+	cyborgjson::JsonObjOut inObj = cyborgjson::toObj(in);
 
 	{
-		cyborgbear::JsonValOut obj0 = cyborgbear::objRead(inObj, "Field1");
-		retval |= cyborgbear::readVal(obj0, this->Field1);
+		cyborgjson::JsonValOut obj0 = cyborgjson::objRead(inObj, "Field1");
+		retval |= cyborgjson::readVal(obj0, this->Field1);
 	}
 	{
-		cyborgbear::JsonValOut obj0 = cyborgbear::objRead(inObj, "Field2");
-		retval |= cyborgbear::readVal(obj0, this->Field2);
+		cyborgjson::JsonValOut obj0 = cyborgjson::objRead(inObj, "Field2");
+		retval |= cyborgjson::readVal(obj0, this->Field2);
 	}
 	{
-		cyborgbear::JsonValOut obj0 = cyborgbear::objRead(inObj, "Field3");
-		retval |= cyborgbear::readVal(obj0, this->Field3);
+		cyborgjson::JsonValOut obj0 = cyborgjson::objRead(inObj, "Field3");
+		retval |= cyborgjson::readVal(obj0, this->Field3);
 	}
 	{
-		cyborgbear::JsonValOut obj0 = cyborgbear::objRead(inObj, "Field4");
-		retval |= cyborgbear::readVal(obj0, this->Field4);
+		cyborgjson::JsonValOut obj0 = cyborgjson::objRead(inObj, "Field4");
+		retval |= cyborgjson::readVal(obj0, this->Field4);
 	}
 	{
-		cyborgbear::JsonValOut obj0 = cyborgbear::objRead(inObj, "Field5");
-		if (!cyborgbear::isNull(obj0)) {
-			if (cyborgbear::isObj(obj0)) {
-				cyborgbear::JsonObjOut map0 = cyborgbear::toObj(obj0);
-				for (cyborgbear::JsonObjIterator it1 = cyborgbear::jsonObjIterator(map0); !cyborgbear::iteratorAtEnd(it1, map0); it1 = cyborgbear::jsonObjIteratorNext(map0,  it1)) {
+		cyborgjson::JsonValOut obj0 = cyborgjson::objRead(inObj, "Field5");
+		if (!cyborgjson::isNull(obj0)) {
+			if (cyborgjson::isObj(obj0)) {
+				cyborgjson::JsonObjOut map0 = cyborgjson::toObj(obj0);
+				for (cyborgjson::JsonObjIterator it1 = cyborgjson::jsonObjIterator(map0); !cyborgjson::iteratorAtEnd(it1, map0); it1 = cyborgjson::jsonObjIteratorNext(map0,  it1)) {
 					string i;
-					cyborgbear::JsonValOut obj1 = cyborgbear::iteratorValue(it1);
+					cyborgjson::JsonValOut obj1 = cyborgjson::iteratorValue(it1);
 					{
-						std::string key = cyborgbear::toStdString(cyborgbear::jsonObjIteratorKey(it1));
+						std::string key = cyborgjson::toStdString(cyborgjson::jsonObjIteratorKey(it1));
 						std::string o;
 						std::stringstream s;
 						s << key;
 						s >> o;
 						i = o.c_str();
 					}
-					retval |= cyborgbear::readVal(obj1, this->Field5[i]);
+					retval |= cyborgjson::readVal(obj1, this->Field5[i]);
 				}
 			}
 		}
@@ -283,59 +268,59 @@ cyborgbear::Error Model1::loadJsonObj(cyborgbear::JsonVal in) {
 	return retval;
 }
 
-cyborgbear::JsonValOut Model1::buildJsonObj() {
-	cyborgbear::JsonObjOut obj = cyborgbear::newJsonObj();
+cyborgjson::JsonValOut Model1::buildJsonObj() {
+	cyborgjson::JsonObjOut obj = cyborgjson::newJsonObj();
 	{
-		cyborgbear::JsonValOut out0 = cyborgbear::toJsonVal(this->Field1);
-		cyborgbear::objSet(obj, "Field1", out0);
-		cyborgbear::decref(out0);
+		cyborgjson::JsonValOut out0 = cyborgjson::toJsonVal(this->Field1);
+		cyborgjson::objSet(obj, "Field1", out0);
+		cyborgjson::decref(out0);
 	}
 	{
-		cyborgbear::JsonValOut obj0 = this->Field2.buildJsonObj();
-		cyborgbear::JsonValOut out0 = obj0;
-		cyborgbear::objSet(obj, "Field2", out0);
-		cyborgbear::decref(out0);
+		cyborgjson::JsonValOut obj0 = this->Field2.buildJsonObj();
+		cyborgjson::JsonValOut out0 = obj0;
+		cyborgjson::objSet(obj, "Field2", out0);
+		cyborgjson::decref(out0);
 	}
 	{
-		cyborgbear::JsonArrayOut out1 = cyborgbear::newJsonArray();
-		for (cyborgbear::VectorIterator i = 0; i < 4; i++) {
-			cyborgbear::JsonValOut out0 = cyborgbear::toJsonVal(this->Field3[i]);
-			cyborgbear::arrayAdd(out1, out0);
-			cyborgbear::decref(out0);
+		cyborgjson::JsonArrayOut out1 = cyborgjson::newJsonArray();
+		for (cyborgjson::VectorIterator i = 0; i < 4; i++) {
+			cyborgjson::JsonValOut out0 = cyborgjson::toJsonVal(this->Field3[i]);
+			cyborgjson::arrayAdd(out1, out0);
+			cyborgjson::decref(out0);
 		}
-		cyborgbear::objSet(obj, "Field3", out1);
-		cyborgbear::decref(out1);
+		cyborgjson::objSet(obj, "Field3", out1);
+		cyborgjson::decref(out1);
 	}
 	{
-		cyborgbear::JsonArrayOut out2 = cyborgbear::newJsonArray();
-		for (cyborgbear::VectorIterator i = 0; i < this->Field4.size(); i++) {
-			cyborgbear::JsonArrayOut out1 = cyborgbear::newJsonArray();
-			for (cyborgbear::VectorIterator ii = 0; ii < this->Field4[i].size(); ii++) {
-				cyborgbear::JsonValOut out0 = cyborgbear::toJsonVal(this->Field4[i][ii]);
-				cyborgbear::arrayAdd(out1, out0);
-				cyborgbear::decref(out0);
+		cyborgjson::JsonArrayOut out2 = cyborgjson::newJsonArray();
+		for (cyborgjson::VectorIterator i = 0; i < this->Field4.size(); i++) {
+			cyborgjson::JsonArrayOut out1 = cyborgjson::newJsonArray();
+			for (cyborgjson::VectorIterator ii = 0; ii < this->Field4[i].size(); ii++) {
+				cyborgjson::JsonValOut out0 = cyborgjson::toJsonVal(this->Field4[i][ii]);
+				cyborgjson::arrayAdd(out1, out0);
+				cyborgjson::decref(out0);
 			}
-			cyborgbear::arrayAdd(out2, out1);
-			cyborgbear::decref(out1);
+			cyborgjson::arrayAdd(out2, out1);
+			cyborgjson::decref(out1);
 		}
-		cyborgbear::objSet(obj, "Field4", out2);
-		cyborgbear::decref(out2);
+		cyborgjson::objSet(obj, "Field4", out2);
+		cyborgjson::decref(out2);
 	}
 	{
-		cyborgbear::JsonObjOut out1 = cyborgbear::newJsonObj();
+		cyborgjson::JsonObjOut out1 = cyborgjson::newJsonObj();
 		for (std::map< string, string >::iterator n = this->Field5.begin(); n != this->Field5.end(); ++n) {
 			std::stringstream s;
 			string key;
 			std::string tmp;
-			s << cyborgbear::toStdString(cyborgbear::toString(n->first));
+			s << cyborgjson::toStdString(cyborgjson::toString(n->first));
 			s >> tmp;
-			key = cyborgbear::toString(tmp);
-			cyborgbear::JsonValOut out0 = cyborgbear::toJsonVal(this->Field5[n->first]);
-			cyborgbear::objSet(out1, key, out0);
-			cyborgbear::decref(out0);
+			key = cyborgjson::toString(tmp);
+			cyborgjson::JsonValOut out0 = cyborgjson::toJsonVal(this->Field5[n->first]);
+			cyborgjson::objSet(out1, key, out0);
+			cyborgjson::decref(out0);
 		}
-		cyborgbear::objSet(obj, "Field5", out1);
-		cyborgbear::decref(out1);
+		cyborgjson::objSet(obj, "Field5", out1);
+		cyborgjson::decref(out1);
 	}
 	return obj;
 }

@@ -1,4 +1,4 @@
-echo "package main; const cyborgbear_version = \"$2\";" > version.go
+echo "package main; const cyborgjson_version = \"$2\";" > version.go
 go fmt
 
 liccor
