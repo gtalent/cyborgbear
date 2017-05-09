@@ -23,16 +23,16 @@ import (
 )
 
 type Cpp struct {
-	hppPrefix    string
-	hpp          string
-	constructor  string
-	reader       string
-	writer       string
-	equals       string
-	notEquals    string
-	namespace    string
-	lowerCase    bool
-	lib          int
+	hppPrefix   string
+	hpp         string
+	constructor string
+	reader      string
+	writer      string
+	equals      string
+	notEquals   string
+	namespace   string
+	lowerCase   bool
+	lib         int
 }
 
 func NewCOut(namespace string, lib int, lowerCase bool) *Cpp {
